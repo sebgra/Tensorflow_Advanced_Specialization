@@ -1,6 +1,6 @@
 # TensorFlow Advanced Technic Specialization - Coursera
 
-This repo contain all the materials from 
+This repo contain all the materials from [Coursera](https://www.coursera.org/specializations/tensorflow-advanced-techniques).
 
 ## C1 :  Custom Models, Layers, and Loss function with TensorFlow
 
@@ -61,4 +61,54 @@ This repo contain all the materials from
 - Autograph
 - Complex code graph building
 - Assignment
+
+# Snipets
+
+## Creating models with Sequential
+
+```python
+tf.keras.models.Sequential([tf.keras.layers.Flatten(input_shape=(28, 28)),
+                                            tf.keras.layers.Dense(128, activation=tf.nn.relu),
+                                            tf.keras.layers.Dense(10, activation=tf.nn.softmax)])
+```
+
+## Creting models with API
+
+```python
+
+# instantiate the input Tensor
+from tensorflow.keras.models import Model
+
+input_layer = tf.keras.Input(shape=(28, 28))
+
+# stack the layers using the syntax: new_layer()(previous_layer)
+flatten_layer = tf.keras.layers.Flatten()(input_layer)
+first_dense = tf.keras.layers.Dense(128, activation=tf.nn.relu)(flatten_layer)
+output_layer = tf.keras.layers.Dense(10, activation=tf.nn.softmax)(first_dense)
+
+# declare inputs and outputs
+func_model = Model(inputs=input_layer, outputs=output_layer)
+```
+
+
+## Plot Model
+
+```python
+from tensorflow.python.keras.utils.vis_utils import plot_model
+
+plot_model(model, show_shapes=True, show_layer_names=True, to_file='model.png')
+```
+
+## Build model and train
+
+```python
+# configure, train, and evaluate the model
+model.compile(optimizer=tf.optimizers.Adam(),
+              loss='sparse_categorical_crossentropy',
+              metrics=['accuracy'])
+model.fit(training_images, training_labels, epochs=5)
+model.evaluate(test_images, test_labels)
+```
+
+
 
