@@ -6,10 +6,10 @@ This repo contain all the materials from [Coursera](https://www.coursera.org/spe
 
 ### Week 1 : Functional APIs
 
-- Functional API
-- Functional API usage
-- Siamese Network
-- Assignment
+- [Functional API](./C1/week_1/C1_W1_Lab_1_functional-practice.ipynb)
+- [Functional API usage](./C1/week_1/C1_W1_Lab_2_multi-output.ipynb)
+- [Siamese Network](./C1/week_1/C1_W1_Lab_3_siamese-network.ipynb)
+- [Assignment](./C1/week_1/C1W1_Assignment.ipynb)
 
 
 ### Week 2 : Custom Loss functions
@@ -109,6 +109,45 @@ model.compile(optimizer=tf.optimizers.Adam(),
 model.fit(training_images, training_labels, epochs=5)
 model.evaluate(test_images, test_labels)
 ```
+## Multiple Ouput Models
+
+```python
+#Define model layers.
+input_layer = Input(shape=(len(train .columns),))
+first_dense = Dense(units='128', activation='relu')(input_layer)
+second_dense = Dense(units='128', activation='relu')(first_dense)
+
+# Y1 output will be fed directly from the second dense
+y1_output = Dense(units='1', name='y1_output')(second_dense)
+third_dense = Dense(units='64', activation='relu')(second_dense)
+
+# Y2 output will come via the third dense
+y2_output = Dense(units='1', name='y2_output')(third_dense)
+
+# Define the model with the input layer and a list of output layers
+model = Model(inputs=input_layer, outputs=[y1_output, y2_output])
+
+# Specify the optimizer, and compile the model with loss functions for both outputs
+optimizer = tf.keras.optimizers.SGD(lr=0.001)
+model.compile(optimizer=optimizer,
+              loss={'y1_output': 'mse', 'y2_output': 'mse'},
+              metrics={'y1_output': tf.keras.metrics.RootMeanSquaredError(),
+                       'y2_output': tf.keras.metrics.RootMeanSquaredError()})
+# Train the model for 500 epochs
+history = model.fit(norm_train_X, train_Y,
+                    epochs=500, batch_size=10, validation_data=(norm_test_X, test_Y))
+
+# Test the model and print loss and mse for both outputs
+loss, Y1_loss, Y2_loss, Y1_rmse, Y2_rmse = model.evaluate(x=norm_test_X, y=test_Y)
+print("Loss = {}, Y1_loss = {}, Y1_mse = {}, Y2_loss = {}, Y2_mse = {}".format(loss, Y1_loss, Y1_rmse, Y2_loss, Y2_rmse))
+```
+
+## Multiple Input Model - Siamese NN
+
+```python
+
+```
+
 
 
 
