@@ -62,6 +62,35 @@ This repo contain all the materials from [Coursera](https://www.coursera.org/spe
 - Complex code graph building
 - Assignment
 
+### Week 4 : Distributed Strategy
+
+- Mirror strategy
+- Mirror multi-GPU Strategy
+- TPU strategy
+- Assignment
+
+## C3 : 
+
+### Week 1 : Introduction to copmputer Vision
+
+- Transfert learning
+- Advanced transfert learning
+- Detection and object localization
+- Assignment
+
+### Week 2 : Object detection
+
+- Object detection with TensorFlow
+- Object detection API
+- Assignment
+
+### Week 3 : Image segentation
+
+- Image segmentation overview : FCNN
+- U-Net
+- Instance segmentation
+- Assignment
+
 # Snipets
 
 ## Creating models with Sequential
