@@ -14,82 +14,89 @@ This repo contain all the materials from [Coursera](https://www.coursera.org/spe
 
 ### Week 2 : Custom Loss functions
 
-- Custom Loss functions
-- Custom Loss Class and hyperparameters
-- Contrastive Loss
-- Assignment
+- [Custom Loss functions](./C1/week_2/C1_W2_Lab_1_huber-loss.ipynb)
+- [Custom Loss Class and hyperparameters](./C1/week_2/C1_W2_Lab_2_huber-object-loss.ipynb)
+- [Contrastive Loss](./C1/week_2/C1_W1_Lab_3_siamese-network.ipynb)
+- [Assignment](./C1/week_2/C1W2_Assignment.ipynb)
 
 
 
 ### Week 3 : Custom Layers
 
-- Custom Lambda Layers
-- Custom Lambda Layers : Usage
-- Activation of custom layers
-- Assignment
+- [Custom Lambda Layers](./C1/week_3/C1_W3_Lab_1_lambda-layer.ipynb)
+- [Custom Lambda Layers : Usage](./C1/week_3/C1_W3_Lab_2_custom-dense-layer.ipynb)
+- [Activation of custom layers](./C1/week_3/C1_W3_Lab_3_custom-layer-activation.ipynb)
+- [Assignment](./C1/week_3/C1W3_Assignment.ipynb)
 
 
 ### Week 4 : Custom Models
 
-- Complex architectures with the functional API
+- [Complex architectures with the functional API](./C1/week_4/C1_W4_Lab_1_basic-model.ipynb )
 - Simplify complex architectures with class Model
-- RestNet implementation
-- Assignment
+- [RestNet implementation](./C1/week_4/C1_W4_Lab_2_resnet-example.ipynb)
+- [Assignment](./C1/week_4/C1W4_Assignment.ipynb)
 
 
 ### Week 5 : Callbacks
 
-- Integrated reminder
-- Personnalized reminder
+- [Integrated reminder](./C1/week_5/C1_W5_Lab_1_exploring-callbacks.ipynb)
+- [Personnalized reminder](./C1/week_5/C1_W5_Lab_2_custom-callbacks.ipynb)
 
 ## C2 : Custom and distributed  Training with TensorFlow
 
 ### Week 1 : Gradients and differenciation 
 
-- Tensor Notions
-- Tensor in eaer mode
-- Assingment
+- [Tensor Notions](./C2/week_1/C2_W1_Lab_1_basic-tensors.ipynb)
+- [Tensor in eaer mode](./C2/week_1/C2_W1_Lab_2_gradient-tape-basics.ipynb)
+- [Assingment](./C2/week_1/C2W1_Assignment.ipynb)
 
 ### Week 2 : Custom functions
 
-- Custom training loops
-- Custom pipeline with TensorFlow
-- Assignment
+- [Custom training loops](./C2/week_2/C2_W2_Lab_1_training-basics.ipynb)
+- [Custom pipeline with TensorFlow](./C2/week_2/C2_W2_Lab_2_training-categorical.ipynb)
+- [Assignment](./C2/week_2/C2W2_Assignment.ipynb)
 
 ### Week 3 : Graphic mode
 
-- Autograph
-- Complex code graph building
-- Assignment
+- [Autograph](./C2/week_3/C2_W3_Lab_1_autograph-basics.ipynb)
+- [Complex code graph building](./C2/week_3/C2_W3_Lab_2-graphs-for-complex-code.ipynb)
+- [Assignment](./C2/week_3/C2W3_Assignment.ipynb)
 
 ### Week 4 : Distributed Strategy
 
-- Mirror strategy
-- Mirror multi-GPU Strategy
-- TPU strategy
-- Assignment
+- [Mirror strategy](./C2/week_4/C2_W4_Lab_1_basic-mirrored-strategy.ipynb)
+- [Mirror multi-GPU Strategy](./C2/week_4/C2_W4_Lab_2_multi-GPU-mirrored-strategy.ipynb)
+- [TPU strategy](./C2/week_4/C2_W4_Lab_3_using-TPU-strategy.ipynb)()
+- [TPU strategy 2](./C2/week_4/C2_W4_Lab_4_one-device-strategy.ipynb)()
+- [Assignment](./C2/week_4/C2W4_Assignment.ipynb)
 
 ## C3 : 
 
 ### Week 1 : Introduction to copmputer Vision
 
-- Transfert learning
-- Advanced transfert learning
-- Detection and object localization
-- Assignment
+- [Transfert learning](./C3/week_1/C3_W1_Lab_1_transfer_learning_cats_dogs.ipynb)
+- [Advanced transfert learning](./C3/week_1/C3_W1_Lab_2_Transfer_Learning_CIFAR_10.ipynb)
+- [Detection and object localization](./C3/week_1/C3_W1_Lab_3_Object_Localization.ipynb)
+- [Assignment](./C3/week_1/C3W1_Assignment.ipynb)
 
 ### Week 2 : Object detection
 
-- Object detection with TensorFlow
-- Object detection API
-- Assignment
+- [Object detection with TensorFlow](./C3/week_2/C3_W2_Lab_1_Simple_Object_Detection.ipynb)
+- [Object detection API](./C3/week_2/C3_W2_Lab_2_Object_Detection.ipynb)
+- [Assignment](./C3/week_2/C3W2_Assignment.ipynb)
 
 ### Week 3 : Image segentation
 
-- Image segmentation overview : FCNN
-- U-Net
-- Instance segmentation
-- Assignment
+- [Image segmentation overview : FCNN](./C3/week_3/C3_W3_Lab_1_VGG16-FCN8-CamVid.ipynb)
+- [U-Net](./C3/week_3/C3_W3_Lab_2_OxfordPets_UNet.ipynb)
+- [Instance segmentation](./C3/week_3/C3_W3_Lab_3_Mask_RCNN_ImageSegmentation.ipynb)
+- [Assignment](./C3/week_3/C3W3_Assignment.ipynb)
+
+### Week 4 : 
+
+-
+-
+
 
 # Snipets
 
