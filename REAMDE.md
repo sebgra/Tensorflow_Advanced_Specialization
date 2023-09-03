@@ -70,9 +70,9 @@ This repo contain all the materials from [Coursera](https://www.coursera.org/spe
 - [TPU strategy 2](./C2/week_4/C2_W4_Lab_4_one-device-strategy.ipynb)()
 - [Assignment](./C2/week_4/C2W4_Assignment.ipynb)
 
-## C3 : 
+## C3 : Advanced computer vision ith TensorFlow
 
-### Week 1 : Introduction to copmputer Vision
+### Week 1 : Introduction to computer Vision
 
 - [Transfert learning](./C3/week_1/C3_W1_Lab_1_transfer_learning_cats_dogs.ipynb)
 - [Advanced transfert learning](./C3/week_1/C3_W1_Lab_2_Transfer_Learning_CIFAR_10.ipynb)
@@ -94,11 +94,11 @@ This repo contain all the materials from [Coursera](https://www.coursera.org/spe
 
 ### Week 4 : Models visualization and interpretability
 
-- [Introduction to visualization and interpretability](./C3/week_4/)
-- [Introduction to visualization and interpretability 2](./C3/week_4/)
-- [Saliency maps](./C3/week_4/)
-- [Gradients and Class Activation Maps](./C3/week_4/)
-- [Assignment](./C3/week_4/)
+- [Introduction to visualization and interpretability](./C3/week_4/C3_W4_Lab_1_FashionMNIST_CAM.ipynb)
+- [Introduction to visualization and interpretability 2](./C3/week_4/C3_W4_Lab_2_CatsDogs_CAM.ipynb)
+- [Saliency maps](./C3/week_4/C3_W4_Lab_3_Saliency.ipynb)
+- [Gradients and Class Activation Maps](./C3/week_4/C3_W4_Lab_4_GradCam.ipynb)
+- [Assignment](./C3/week_4/C3W4_Assignment.ipynb)
 
 
 
