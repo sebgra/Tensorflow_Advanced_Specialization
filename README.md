@@ -47,7 +47,7 @@ This repo contain all the materials from [Coursera](https://www.coursera.org/spe
 ### Week 1 : Gradients and differenciation 
 
 - [Tensor Notions](./C2/week_1/C2_W1_Lab_1_basic-tensors.ipynb)
-- [Tensor in eaer mode](./C2/week_1/C2_W1_Lab_2_gradient-tape-basics.ipynb)
+- [Tensor in eager mode](./C2/week_1/C2_W1_Lab_2_gradient-tape-basics.ipynb)
 - [Assingment](./C2/week_1/C2W1_Assignment.ipynb)
 
 ### Week 2 : Custom functions
@@ -100,7 +100,35 @@ This repo contain all the materials from [Coursera](https://www.coursera.org/spe
 - [Gradients and Class Activation Maps](./C3/week_4/C3_W4_Lab_4_GradCam.ipynb)
 - [Assignment](./C3/week_4/C3W4_Assignment.ipynb)
 
+## C4 : Generative deep learning with TensorFlow
 
+### Week 1 : Style transfert
+
+- [Neural Style Tranfert](./C4/week_1/C4_W2_Lab_1_FirstAutoEncoder.ipynb)
+- [Neural Style Tranfert Pt2](./C4/week_1/C4_W1_Lab_2_Fast_NST.ipynb)
+- [Fast Neural Style Tranfert](./C4/week_1/C4_W1_Lab_2_Fast_NST.ipynb)
+- [Assignment](./C4/week_1/C4W1_Assignment.ipynb)
+
+### Week 2 : Auto-Encoders
+
+- [First Auto-Encoder](./C4/week_2/C4_W2_Lab_1_FirstAutoEncoder.ipynb)
+- [First Auto-Encoder MNIST](./C4/week_2/C4_W2_Lab_2_MNIST_Autoencoder.ipynb)
+- [Deep Auto-Encoder](./C4/week_2/C4_W2_Lab_3_MNIST_DeepAutoencoder.ipynb)
+- [CNN Auto-Encoder](./C4/week_2/C4_W2_Lab_4_FashionMNIST_CNNAutoEncoder.ipynb)
+- [Noisy CNN Auto-Encoder](./C4/week_2/C4_W2_Lab_5_FashionMNIST_NoisyCNNAutoEncoder.ipynb)
+- [Assignment](./C4/week_2/C4W2_Assignment.ipynb)
+
+### Week 3 : Variational Auto-Encoders
+
+- [Variational Auto-Encoder MNIST](./C4/week_3/C4_W3_Lab_1_VAE_MNIST.ipynb)
+- [Assignment](./C4/week_3/C4W3_Assignment.ipynb)
+
+### Week 4 : GANs
+
+- [First GAN](./C4/week_4/C4_W4_Lab_1_First_GAN.ipynb)
+- [DCGAN](./C4/week_4/C4_W4_Lab_2_First_DCGAN.ipynb)
+- [CelabA GAN](./C4/week_4/C4_W4_Lab_3_CelebA_GAN_Experiments.ipynb)
+- [Assignment](./C4/week_4/C4W4_Assignment.ipynb)
 
 # Snipets
 
@@ -206,15 +234,245 @@ plot_model(model, show_shapes=True, show_layer_names=True, to_file='outer-model.
 ## Custom Loss function
 
 ```python
+def my_huber_loss(y_true, y_pred):
+    threshold = 1
+    error = y_true - y_pred
+    is_small_error = tf.abs(error) <= threshold
+    small_error_loss = tf.square(error) / 2
+    big_error_loss = threshold * (tf.abs(error) - (0.5 * threshold))
+    return tf.where(is_small_error, small_error_loss, big_error_loss)
 
+model = tf.keras.Sequential([keras.layers.Dense(units=1, input_shape=[1])])
+model.compile(optimizer='sgd', loss=my_huber_loss)
+model.fit(xs, ys, epochs=500,verbose=0)
 ```
 
 ## Custom loss function with hyperparameter
 
 ```python
+from tensorflow.keras.losses import Loss
 
+class MyHuberLoss(Loss):
+  
+    # initialize instance attributes
+    def __init__(self, threshold=1):
+        super().__init__()
+        self.threshold = threshold
+
+    # compute loss
+    def call(self, y_true, y_pred):
+        error = y_true - y_pred
+        is_small_error = tf.abs(error) <= self.threshold
+        small_error_loss = tf.square(error) / 2
+        big_error_loss = self.threshold * (tf.abs(error) - (0.5 * self.threshold))
+        return tf.where(is_small_error, small_error_loss, big_error_loss)
+
+model = tf.keras.Sequential([keras.layers.Dense(units=1, input_shape=[1])])
+model.compile(optimizer='sgd', loss=MyHuberLoss(threshold=1.02))
+model.fit(xs, ys, epochs=500,verbose=0)
 ```
 
+
+## Custom Lambda Layers
+
+```python
+def my_relu(x):
+    return K.maximum(-0.1, x)
+
+model = tf.keras.models.Sequential([
+    tf.keras.layers.Flatten(input_shape=(28, 28)),
+    tf.keras.layers.Dense(128),
+    tf.keras.layers.Lambda(my_relu), 
+    tf.keras.layers.Dense(10, activation='softmax')
+])
+
+model.compile(optimizer='adam',
+              loss='sparse_categorical_crossentropy',
+              metrics=['accuracy'])
+
+model.fit(x_train, y_train, epochs=5)
+```
+
+## Custom Layer
+
+```python
+from tensorflow.keras.layers import Layer
+
+class SimpleDense(Layer):
+
+    def __init__(self, units=32):
+        '''Initializes the instance attributes'''
+        super(SimpleDense, self).__init__()
+        self.units = units
+
+    def build(self, input_shape):
+        '''Create the state of the layer (weights)'''
+        # initialize the weights
+        w_init = tf.random_normal_initializer()
+        self.w = tf.Variable(name="kernel",
+            initial_value=w_init(shape=(input_shape[-1], self.units),
+                                 dtype='float32'),
+            trainable=True)
+
+        # initialize the biases
+        b_init = tf.zeros_initializer()
+        self.b = tf.Variable(name="bias",
+            initial_value=b_init(shape=(self.units,), dtype='float32'),
+            trainable=True)
+
+    def call(self, inputs):
+        '''Defines the computation from inputs to outputs'''
+        return tf.matmul(inputs, self.w) + self.b
+
+model = tf.keras.models.Sequential([
+    tf.keras.layers.Flatten(input_shape=(28, 28)),
+    SimpleDense(128, activation='relu'),
+    tf.keras.layers.Dropout(0.2),
+    tf.keras.layers.Dense(10, activation='softmax')
+])
+
+model.compile(optimizer='adam',
+              loss='sparse_categorical_crossentropy',
+              metrics=['accuracy'])
+```
+
+## Complex Architecture
+
+```python
+# inherit from the Model base class
+class WideAndDeepModel(Model):
+    def __init__(self, units=30, activation='relu', **kwargs):
+        '''initializes the instance attributes'''
+        super().__init__(**kwargs)
+        self.hidden1 = Dense(units, activation=activation)
+        self.hidden2 = Dense(units, activation=activation)
+        self.main_output = Dense(1)
+        self.aux_output = Dense(1)
+
+    def call(self, inputs):
+        '''defines the network architecture'''
+        input_A, input_B = inputs
+        hidden1 = self.hidden1(input_B)
+        hidden2 = self.hidden2(hidden1)
+        concat = concatenate([input_A, hidden2])
+        main_output = self.main_output(concat)
+        aux_output = self.aux_output(hidden2)
+        
+        return main_output, aux_output
+
+# create an instance of the model
+model = WideAndDeepModel()
+```
+
+## Custom Callbacks
+
+```python
+callback = tf.keras.callbacks.LambdaCallback(
+    on_epoch_end=lambda epoch,logs: 
+    print("Epoch: {}, Val/Train loss ratio: {:.2f}".format(epoch, logs["val_loss"] / logs["loss"]))
+)
+
+model = get_model()
+_ = model.fit(x_train, y_train,
+          validation_data=(x_test, y_test),
+          batch_size=64,
+          epochs=3,
+          verbose=0,
+          callbacks=[callback])
+```
+
+## Gradient and differencition
+
+```python
+x = tf.Variable(1.0)
+
+with tf.GradientTape() as tape_2:
+    with tf.GradientTape() as tape_1:
+        y = x * x * x
+
+        dy_dx = tape_1.gradient(y, x)
+        
+        # this is acceptable
+        d2y_dx2 = tape_2.gradient(dy_dx, x)
+
+print(dy_dx)
+print(d2y_dx2)
+```
+
+## Custom training loops
+
+```python
+def base_model():
+  inputs = tf.keras.Input(shape=(784,), name='digits')
+  x = tf.keras.layers.Dense(64, activation='relu', name='dense_1')(inputs)
+  x = tf.keras.layers.Dense(64, activation='relu', name='dense_2')(x)
+  outputs = tf.keras.layers.Dense(10, activation='softmax', name='predictions')(x)
+  model = tf.keras.Model(inputs=inputs, outputs=outputs)
+  return model
+
+optimizer = tf.keras.optimizers.Adam()
+loss_object = tf.keras.losses.SparseCategoricalCrossentropy()
+
+train_acc_metric = tf.keras.metrics.SparseCategoricalAccuracy()
+val_acc_metric = tf.keras.metrics.SparseCategoricalAccuracy()
+
+def apply_gradient(optimizer, model, x, y):
+  with tf.GradientTape() as tape:
+    logits = model(x)
+    loss_value = loss_object(y_true=y, y_pred=logits)
+  
+  gradients = tape.gradient(loss_value, model.trainable_weights)
+  optimizer.apply_gradients(zip(gradients, model.trainable_weights))
+  
+  return logits, loss_value
+
+def train_data_for_one_epoch():
+  losses = []
+  pbar = tqdm(total=len(list(enumerate(train))), position=0, leave=True, bar_format='{l_bar}{bar}| {n_fmt}/{total_fmt} ')
+  for step, (x_batch_train, y_batch_train) in enumerate(train):
+      logits, loss_value = apply_gradient(optimizer, model, x_batch_train, y_batch_train)
+      
+      losses.append(loss_value)
+      
+      train_acc_metric(y_batch_train, logits)
+      pbar.set_description("Training loss for step %s: %.4f" % (int(step), float(loss_value)))
+      pbar.update()
+  return losses
+
+def perform_validation():
+  losses = []
+  for x_val, y_val in test:
+      val_logits = model(x_val)
+      val_loss = loss_object(y_true=y_val, y_pred=val_logits)
+      losses.append(val_loss)
+      val_acc_metric(y_val, val_logits)
+  return losses
+
+
+model = base_model()
+
+# Iterate over epochs.
+epochs = 10
+epochs_val_losses, epochs_train_losses = [], []
+for epoch in range(epochs):
+  print('Start of epoch %d' % (epoch,))
+  
+  losses_train = train_data_for_one_epoch()
+  train_acc = train_acc_metric.result()
+
+  losses_val = perform_validation()
+  val_acc = val_acc_metric.result()
+
+  losses_train_mean = np.mean(losses_train)
+  losses_val_mean = np.mean(losses_val)
+  epochs_val_losses.append(losses_val_mean)
+  epochs_train_losses.append(losses_train_mean)
+
+  print('\n Epoch %s: Train loss: %.4f  Validation Loss: %.4f, Train Accuracy: %.4f, Validation Accuracy %.4f' % (epoch, float(losses_train_mean), float(losses_val_mean), float(train_acc), float(val_acc)))
+  
+  train_acc_metric.reset_states()
+  val_acc_metric.reset_states()
+```
 
 
 
