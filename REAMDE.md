@@ -185,8 +185,36 @@ print("Loss = {}, Y1_loss = {}, Y1_mse = {}, Y2_loss = {}, Y2_mse = {}".format(l
 ## Multiple Input Model - Siamese NN
 
 ```python
+# create the left input and point to the base network
+input_a = Input(shape=(28,28,), name="left_input")
+vect_output_a = base_network(input_a)
+
+# create the right input and point to the base network
+input_b = Input(shape=(28,28,), name="right_input")
+vect_output_b = base_network(input_b)
+
+# measure the similarity of the two vector outputs
+output = Lambda(euclidean_distance, name="output_layer", output_shape=eucl_dist_output_shape)([vect_output_a, vect_output_b])
+
+# specify the inputs and output of the model
+model = Model([input_a, input_b], output)
+
+# plot model graph
+plot_model(model, show_shapes=True, show_layer_names=True, to_file='outer-model.png')
+```
+
+## Custom Loss function
+
+```python
 
 ```
+
+## Custom loss function with hyperparameter
+
+```python
+
+```
+
 
 
 
